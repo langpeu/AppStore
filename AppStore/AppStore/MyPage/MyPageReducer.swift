@@ -77,6 +77,16 @@ struct MyPageReducer: Reducer {
                 }
                 return Effect.none
             case let .path(stackAction):
+                switch stackAction {
+                case let .element(id, action):
+                    switch action {
+                    case let .name(.onEditSuccess(name)):
+                        state.userName = name
+                        state.path.pop(from: id)
+                    default : return .none
+                    }
+                default : return .none
+                }
                 return Effect.none
             }
         }

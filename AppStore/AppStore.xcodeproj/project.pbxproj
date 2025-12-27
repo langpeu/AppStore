@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		76E8DF602EF5A5200073C16C /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 76E8DF5F2EF5A5200073C16C /* ComposableArchitecture */; };
-		76E8DF632EF5A52D0073C16C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 76E8DF622EF5A52D0073C16C /* Alamofire */; };
+		76F9950F2EFE67AA000C2B30 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 76F9950E2EFE67AA000C2B30 /* ComposableArchitecture */; };
+		76F995122EFE67BE000C2B30 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 76F995112EFE67BE000C2B30 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76E8DF602EF5A5200073C16C /* ComposableArchitecture in Frameworks */,
-				76E8DF632EF5A52D0073C16C /* Alamofire in Frameworks */,
+				76F9950F2EFE67AA000C2B30 /* ComposableArchitecture in Frameworks */,
+				76F995122EFE67BE000C2B30 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,8 +72,8 @@
 			);
 			name = AppStore;
 			packageProductDependencies = (
-				76E8DF5F2EF5A5200073C16C /* ComposableArchitecture */,
-				76E8DF622EF5A52D0073C16C /* Alamofire */,
+				76F9950E2EFE67AA000C2B30 /* ComposableArchitecture */,
+				76F995112EFE67BE000C2B30 /* Alamofire */,
 			);
 			productName = AppStore;
 			productReference = 76E8DF502EF5A4C00073C16C /* AppStore.app */;
@@ -87,7 +87,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2610;
-				LastUpgradeCheck = 2610;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					76E8DF4F2EF5A4C00073C16C = {
 						CreatedOnToolsVersion = 26.1.1;
@@ -104,8 +104,8 @@
 			mainGroup = 76E8DF472EF5A4C00073C16C;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				76E8DF5E2EF5A5200073C16C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				76E8DF612EF5A52D0073C16C /* XCRemoteSwiftPackageReference "Alamofire" */,
+				76F9950D2EFE67AA000C2B30 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				76F995102EFE67BE000C2B30 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 76E8DF512EF5A4C00073C16C /* Products */;
@@ -197,6 +197,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -254,6 +255,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -347,7 +349,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		76E8DF5E2EF5A5200073C16C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+		76F9950D2EFE67AA000C2B30 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
@@ -355,25 +357,25 @@
 				minimumVersion = 1.23.1;
 			};
 		};
-		76E8DF612EF5A52D0073C16C /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		76F995102EFE67BE000C2B30 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.10.2;
+				minimumVersion = 5.11.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		76E8DF5F2EF5A5200073C16C /* ComposableArchitecture */ = {
+		76F9950E2EFE67AA000C2B30 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 76E8DF5E2EF5A5200073C16C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = 76F9950D2EFE67AA000C2B30 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
-		76E8DF622EF5A52D0073C16C /* Alamofire */ = {
+		76F995112EFE67BE000C2B30 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 76E8DF612EF5A52D0073C16C /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 76F995102EFE67BE000C2B30 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
