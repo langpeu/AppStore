@@ -79,6 +79,7 @@ struct SearchView: View {
                 
                 Button {
                     //TODO: delete keyword
+                    deleteKeyword(keyword: keyword)
                 } label: {
                     Image(systemName: "xmark")
                         .foregroundStyle(.black)
@@ -93,5 +94,16 @@ struct SearchView: View {
         let data = Keyword(title: keyword, date: .now)
         context.insert(data)
         try? context.save()
+    }
+    
+    func deleteKeyword(keyword: Keyword) {
+//        let descriptor = FetchDescriptor<Keyword>(predicate: #Predicate { $0.title == keyword })
+//        if let model = try? context.fetch(descriptor).first {
+//            context.delete(model)
+//        }
+        
+        context.delete(keyword)
+        try? context.save()
+        
     }
 }
