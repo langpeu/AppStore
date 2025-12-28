@@ -83,6 +83,9 @@ struct MyPageReducer: Reducer {
                     case let .name(.onEditSuccess(name)):
                         state.userName = name
                         state.path.pop(from: id)
+                    case let .email(.onEditSuccess(email)):
+                        state.userEmail = email
+                        state.path.pop(from: id)
                     default : return .none
                     }
                 default : return .none

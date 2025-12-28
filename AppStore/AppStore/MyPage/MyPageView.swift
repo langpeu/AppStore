@@ -82,9 +82,20 @@ struct MyPageView: View {
                     Text(option.title)
                         .foregroundStyle(.white)
                         .font(.system(size: 18, weight: .bold))
-                    Text(firstUser?.name ?? "")
-                        .foregroundStyle(Color(UIColor.lightGray))
-                        .font(.system(size: 16))
+                    switch option {
+                    case .name:
+                        Text(firstUser?.name ?? "")
+                            .foregroundStyle(Color(UIColor.lightGray))
+                            .font(.system(size: 16))
+                    case .email:
+                        Text(firstUser?.email ?? "")
+                            .foregroundStyle(Color(UIColor.lightGray))
+                            .font(.system(size: 16))
+                    case .image:
+                        Text("이미지")
+                            .foregroundStyle(Color(UIColor.lightGray))
+                            .font(.system(size: 16))
+                    }
                 }
                 Spacer()
             }
