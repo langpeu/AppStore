@@ -8,7 +8,7 @@
 // Action,State 는 Reducer 내부에 위치함
 
 import ComposableArchitecture
-
+import Foundation
 
 @Reducer
 struct MyPageStackReducer {
@@ -50,6 +50,7 @@ struct MyPageReducer: Reducer {
         var path: StackState<MyPageStackReducer.State> = .init()
         var userName: String = ""
         var userEmail: String = ""
+        var userImage: Data? = nil
     }
     
     enum Action {
@@ -86,6 +87,9 @@ struct MyPageReducer: Reducer {
                     case let .email(.onEditSuccess(email)):
                         state.userEmail = email
                         state.path.pop(from: id)
+//                    case let .image(.onEditSuccess(data)):
+//                        state.userImage = data
+//                        state.path.pop(from: id)
                     default : return .none
                     }
                 default : return .none

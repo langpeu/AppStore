@@ -28,6 +28,9 @@ struct EditImageReducer {
         case setUserImage(Image)
         case authResult(Bool)
         case onSelectPhoto(id: String, data: Data)
+        case onEditSuccess(Data)
+        case onEditFail(String)
+        case alert(PresentationAction<Action>)
     }
     
     var body: some Reducer<State, Action> {
@@ -57,6 +60,15 @@ struct EditImageReducer {
                 return .none
             case let .onSelectPhoto(id, data):
                 state.selectedPhoto = (id: id, data: data)
+                return .none
+            case let .onEditSuccess(data):
+                state.alert = nil
+                return .send(.setUserImageData(data))
+            case let .onEditFail(error):
+                state.alert = AlertState.creatAlert(type: .error(message: error))
+                return .none
+            case .alert:
+                return .none
             }
             return .none
         }
@@ -67,6 +79,7 @@ struct EditImageView: View {
     @Bindable var store: StoreOf<EditImageReducer>
     let colums: [GridItem] = .init(repeating: .init(.flexible()), count: 3)
     
+    @Environment(\.modelContext) private var context
     @Query private var users: [User]
     private var user: User? {
         users.first
@@ -90,7 +103,6 @@ struct EditImageView: View {
                 .clipped()
                 .cornerRadius(8)
             }
-            
             LazyVGrid(columns: colums, spacing: 10) {
                 ForEach(store.assets, id: \.localIdentifier) { asset in
                     assetCell(asset)
@@ -98,8 +110,37 @@ struct EditImageView: View {
             }
             .padding(8)
         }
+        
+        .toolbar(content: {
+            ToolbarItem {
+                Button {
+                    if let data = store.selectedPhoto?.data {
+                        
+                        editImage(data: data)
+                    }else {
+                        store.send(.onEditFail("이미지를 선택해 주세요."))
+                    }
+                } label: {
+                    Text("저장")
+                }
+
+            }
+        })
+        
+        .alert(store: store.scope(state:\.$alert, action: \.alert))
         .onAppear() {
             store.send(.onAppear(image: user?.imageData))
+        }
+    }
+    
+    func editImage(data: Data?) {
+        guard let data else { return }
+        user?.imageData = data
+        do {
+            try context.save()
+            store.send(.onEditSuccess(data))
+        } catch let error {
+            store.send(.onEditFail("이미지 저장을 실패 하였습니다 \(error.localizedDescription)"))
         }
     }
     
