@@ -13,15 +13,17 @@ import ComposableArchitecture
 struct AppStoreApp: App {
     var body: some Scene {
         WindowGroup {
-            MyPageView(store: Store(initialState: MyPageReducer.State(),
-                                    reducer: { MyPageReducer() } ))
+            SearchView(store: Store(initialState: SearchReducer.State(), reducer: {
+                SearchReducer()
+            }))
+            //MyPageView(store: Store(initialState: MyPageReducer.State(),reducer: { MyPageReducer() } ))
         }
         .modelContainer(modelContainer)
     }
 }
 
 private var modelContainer: ModelContainer = {
-    let schema = Schema([User.self])
+    let schema = Schema([User.self, Keyword.self])
     let modelConfiguration = ModelConfiguration(schema: schema)
     
     do {
