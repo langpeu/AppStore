@@ -12,10 +12,23 @@ import SwiftData
 struct SearchView: View {
     @Bindable var store: StoreOf<SearchReducer>
     @Environment(\.modelContext) private var context
-    @Query private var keywords: [Keyword]
+    @Query(sort: \Keyword.date, order: .reverse) private var keywords: [Keyword]
     
     @FocusState private var isFocused: Bool
     var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack {
+                    textField
+                    contentView
+                }
+            }
+            
+        }
+        
+    }
+    
+    private var textField: some View {
         TextField("키워드를 검색해보세요", text: $store.keyword.sending(\.inputText))
             .frame(height: 40)
             .font(.system(size: 15))
@@ -23,13 +36,14 @@ struct SearchView: View {
             .padding(.leading, 12)
             .padding(.vertical, 8)
             .focused($isFocused)
-            .overlay(alignment: .topTrailing) {
+            .overlay(alignment: .trailing) {
                 Button {
                     store.send(.clearText)
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(.gray)
                 }
+                .padding(.trailing, 12)
             }
             .overlay {
                 RoundedRectangle(cornerRadius: 8)
@@ -42,8 +56,38 @@ struct SearchView: View {
                 print("keyword \(store.keyword)")
                 //검색
             }
+            .padding(.horizontal, 20)
     }
     
+    private var contentView: some View {
+        ForEach(keywords, id:\.id) { keyword in
+            HStack {
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.black)
+                    
+                    Text(keyword.title)
+                        .font(.system(size: 16))
+                        .padding(.leading, 10)
+                        .lineLimit(1)
+                    Spacer()
+                }
+                .onTapGesture {
+                    //TODO: 검색
+                }
+                
+                
+                Button {
+                    //TODO: delete keyword
+                } label: {
+                    Image(systemName: "xmark")
+                        .foregroundStyle(.black)
+                }
+            }
+            .padding(20)
+
+        }
+    }
     
     func saveKeyword(keyword: String) {
         let data = Keyword(title: keyword, date: .now)
