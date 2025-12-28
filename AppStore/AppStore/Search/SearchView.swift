@@ -23,6 +23,29 @@ struct SearchView: View {
                     contentView
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("검색")
+                        .font(.title)
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        //MyPage 진입
+                        store.send(.onTapMyPage)
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundStyle(.black)
+                    }
+                    
+                }
+            }
+            .sheet(item: $store.scope(state: \.myPage, action: \.myPage)) { store in
+                MyPageView(store: store )
+            }
+            //            .fullScreenCover(item: $store.scope(state: \.myPage, action: \.myPage)) { store in
+            //                MyPageView(store: store )
+            //            }
             
         }
         
@@ -74,6 +97,7 @@ struct SearchView: View {
                 }
                 .onTapGesture {
                     //TODO: 검색
+                    
                 }
                 
                 
@@ -86,7 +110,7 @@ struct SearchView: View {
                 }
             }
             .padding(20)
-
+            
         }
     }
     
@@ -97,10 +121,10 @@ struct SearchView: View {
     }
     
     func deleteKeyword(keyword: Keyword) {
-//        let descriptor = FetchDescriptor<Keyword>(predicate: #Predicate { $0.title == keyword })
-//        if let model = try? context.fetch(descriptor).first {
-//            context.delete(model)
-//        }
+        //        let descriptor = FetchDescriptor<Keyword>(predicate: #Predicate { $0.title == keyword })
+        //        if let model = try? context.fetch(descriptor).first {
+        //            context.delete(model)
+        //        }
         
         context.delete(keyword)
         try? context.save()
