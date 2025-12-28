@@ -17,6 +17,7 @@ struct EditImageReducer {
     struct State {
         var userImage: Image?
         var assets: [PHAsset] = []
+        var selectedPhoto: (id: String, data: Data)?
         @Presents var alert: AlertState<Action>?
         
     }
@@ -26,6 +27,7 @@ struct EditImageReducer {
         case setUserImageData(Data?)
         case setUserImage(Image)
         case authResult(Bool)
+        case onSelectPhoto(id: String, data: Data)
     }
     
     var body: some Reducer<State, Action> {
@@ -53,6 +55,8 @@ struct EditImageReducer {
             case let .setUserImage(image):
                 state.userImage = image
                 return .none
+            case let .onSelectPhoto(id, data):
+                state.selectedPhoto = (id: id, data: data)
             }
             return .none
         }
@@ -89,11 +93,7 @@ struct EditImageView: View {
             
             LazyVGrid(columns: colums, spacing: 10) {
                 ForEach(store.assets, id: \.localIdentifier) { asset in
-                    AssetImageView(asset: asset, isSelected: false, onTap: { data in
-                        //TODO: onTap
-                    })
-                    .clipped()
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    assetCell(asset)
                 }
             }
             .padding(8)
@@ -101,6 +101,19 @@ struct EditImageView: View {
         .onAppear() {
             store.send(.onAppear(image: user?.imageData))
         }
+    }
+    
+    @ViewBuilder
+    private func assetCell(_ asset: PHAsset) -> some View {
+        let isSelectedImage = (store.selectedPhoto?.id == asset.localIdentifier)
+        AssetImageView(
+            asset: asset,
+            isSelected: isSelectedImage,
+            onTap: { data in
+                store.send(.onSelectPhoto(id: asset.localIdentifier, data: data))
+            })
+        .clipped()
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
     
 }
@@ -112,22 +125,33 @@ private struct AssetImageView: View {
     let onTap: (Data) -> Void
     let imageWidth: CGFloat = (UIScreen.currentWidth - 16 - 20) / 3
     
-    @State private var image: Image? = nil
+    @State private var uiImage: UIImage? = nil
     var body: some View {
         Group {
-            if let image = image {
-                image
+            if let uiImage = uiImage {
+                Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFill()
+                    .onTapGesture {
+                        if let data = uiImage.jpegData(compressionQuality: 1.0) {
+                            onTap(data)
+                        }
+                    }
             } else {
                 Color.gray.opacity(0.2)
             }
         }
         .frame(width: imageWidth, height: imageWidth)
+        .overlay(alignment: .topTrailing, content: {
+            if isSelected {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+                    .frame(width: 20, height: 20)
+            }
+        })
         .onAppear() {
             PhotoManager.fetchImage(asset: asset) { uiImage in
-                guard let uiImage else { return }
-                image = Image(uiImage: uiImage)
+                self.uiImage = uiImage
             }
         }
     }
