@@ -13,7 +13,8 @@ import ComposableArchitecture
 struct AppStoreApp: App {
     var body: some Scene {
         WindowGroup {
-            MyPageView(store: Store(initialState: MyPageReducer.State(), reducer: { MyPageReducer() }))
+            MyPageView(store: Store(initialState: MyPageReducer.State(),
+                                    reducer: { MyPageReducer() } ))
         }
         .modelContainer(modelContainer)
     }

@@ -45,7 +45,12 @@ struct MyPageView: View {
                 Color.black.ignoresSafeArea()
                 VStack {
                     ForEach(MyPageOption.allCases, id: \.self) { option in
-                        listItem(option: option)
+                        let subtitle = switch option {
+                        case .name: firstUser?.name ?? ""
+                        case .email: firstUser?.email ?? ""
+                        case .image: ""
+                        }
+                        listItem(option: option, subtitle: subtitle)
                     }
                 }
             }
@@ -72,7 +77,7 @@ struct MyPageView: View {
         }
     }
     
-    func listItem(option: MyPageOption) -> some View {
+    func listItem(option: MyPageOption, subtitle: String) -> some View {
         Button {
             //TODO: 버튼 클릭 액션
             store.send(.tapOption(option))
@@ -82,20 +87,9 @@ struct MyPageView: View {
                     Text(option.title)
                         .foregroundStyle(.white)
                         .font(.system(size: 18, weight: .bold))
-                    switch option {
-                    case .name:
-                        Text(firstUser?.name ?? "")
-                            .foregroundStyle(Color(UIColor.lightGray))
-                            .font(.system(size: 16))
-                    case .email:
-                        Text(firstUser?.email ?? "")
-                            .foregroundStyle(Color(UIColor.lightGray))
-                            .font(.system(size: 16))
-                    case .image:
-                        Text("이미지")
-                            .foregroundStyle(Color(UIColor.lightGray))
-                            .font(.system(size: 16))
-                    }
+                    Text(subtitle)
+                        .foregroundStyle(Color(UIColor.lightGray))
+                        .font(.system(size: 16))
                 }
                 Spacer()
             }
