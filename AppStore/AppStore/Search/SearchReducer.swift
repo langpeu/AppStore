@@ -15,6 +15,7 @@ struct SearchReducer {
         var keyword: String = ""
         
         @Presents var myPage: MyPageReducer.State?
+        var result: SearchResultReducer.State?
     }
     
     enum Action {
@@ -23,6 +24,8 @@ struct SearchReducer {
         case onTapMyPage
         
         case myPage(PresentationAction<MyPageReducer.Action>)
+        case result(SearchResultReducer.Action)
+        case onSubmit
     }
     
     var body: some Reducer<State, Action> {
@@ -32,6 +35,13 @@ struct SearchReducer {
                 state.keyword = text
             case .clearText:
                 state.keyword = ""
+            case .onTapMyPage:
+                state.myPage = .init()
+            case .onSubmit:
+                state.result = .init()
+            case let .result(resultAction):
+                switch resultAction {
+                }
             case let .myPage(myPagePresentationAction):
                 switch myPagePresentationAction {
                 case let .presented(myPageAction):
@@ -40,14 +50,15 @@ struct SearchReducer {
                     state.myPage = nil
                     return .none
                 }
-            case .onTapMyPage:
-                state.myPage = .init()
             }
             
             return .none
         }
         .ifLet(\.$myPage, action: \.myPage) {
             MyPageReducer()
+        }
+        .ifLet(\.result, action: \.result) {
+            SearchResultReducer()
         }
     }
     

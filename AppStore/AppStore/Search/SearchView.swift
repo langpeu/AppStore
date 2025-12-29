@@ -74,15 +74,26 @@ struct SearchView: View {
                 
             }
             .onSubmit {
-                //키워드 저장
                 saveKeyword(keyword: store.keyword)
-                print("keyword \(store.keyword)")
-                //검색
+                store.send(.onSubmit)
             }
             .padding(.horizontal, 20)
     }
     
     private var contentView: some View {
+        //분기
+        Group {
+            if let store = store.scope(state: \.result, action: \.result) {
+                //2. 검색 결과 리스트
+                SearchResultView()
+            }else {
+                //1. 키워드 리스트
+                keywordList
+            }
+        }
+    }
+    
+    var keywordList: some View {
         ForEach(keywords, id:\.id) { keyword in
             HStack {
                 HStack {
