@@ -22,7 +22,8 @@ struct SearchReducer {
         case inputText(String)
         case clearText
         case onTapMyPage
-        
+        case onEmptyText
+        case onTapKeyword(String)
         case myPage(PresentationAction<MyPageReducer.Action>)
         case result(SearchResultReducer.Action)
         case onSubmit
@@ -33,12 +34,21 @@ struct SearchReducer {
             switch action {
             case let .inputText(text):
                 state.keyword = text
+                if text.isEmpty {
+                    return .send(.onEmptyText)
+                }
             case .clearText:
                 state.keyword = ""
+                return .send(.onEmptyText)
+            case .onEmptyText:
+                state.result = nil
             case .onTapMyPage:
                 state.myPage = .init()
             case .onSubmit:
                 state.result = .init()
+            case let .onTapKeyword(keyword):
+                state.keyword = keyword
+                return .send(.onSubmit)
             case let .result(resultAction):
                 switch resultAction {
                 }
