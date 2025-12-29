@@ -27,3 +27,15 @@ struct AppNetwork: AppNetworkProtocol {
         return await manager.fetchData(url: url, method: .get)
     }
 }
+
+struct MockAppNetwork: AppNetworkProtocol {
+    func fetchAppList(term: String, limit: Int) async -> Result<[AppListItem], NetworkError> {
+        .success([])
+    }
+    
+    func fetchAppDetail(id: Int) async -> Result<[AppDetailItem], NetworkError> {
+        .failure(.invalid)
+    }
+    
+    
+}
