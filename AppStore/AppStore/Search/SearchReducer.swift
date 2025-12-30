@@ -45,13 +45,13 @@ struct SearchReducer {
             case .onTapMyPage:
                 state.myPage = .init()
             case .onSubmit:
-                state.result = .init()
+                state.result = .init(keyword: state.keyword)
+                return .send(.result(.search))
             case let .onTapKeyword(keyword):
                 state.keyword = keyword
                 return .send(.onSubmit)
             case let .result(resultAction):
-                switch resultAction {
-                }
+                return .none
             case let .myPage(myPagePresentationAction):
                 switch myPagePresentationAction {
                 case let .presented(myPageAction):

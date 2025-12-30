@@ -85,7 +85,7 @@ struct SearchView: View {
         Group {
             if let store = store.scope(state: \.result, action: \.result) {
                 //2. 검색 결과 리스트
-                SearchResultView()
+                SearchResultView(store: store)
             }else {
                 //1. 키워드 리스트
                 keywordList

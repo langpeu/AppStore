@@ -15,7 +15,7 @@ struct AppListItem: Decodable, Identifiable {
     let screenshotUrls: [String]
     
     
-    enum CodingKeysTest: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id = "trackId"
         case name = "trackName"
         case iconUrl = "artworkUrl100"
