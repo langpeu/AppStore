@@ -11,7 +11,7 @@ import SwiftData
 import Photos
 
 @Reducer
-struct EditImageReducer {
+struct EditImageFeature {
     
     @ObservableState
     struct State {
@@ -76,7 +76,7 @@ struct EditImageReducer {
 }
 
 struct EditImageView: View {
-    @Bindable var store: StoreOf<EditImageReducer>
+    @Bindable var store: StoreOf<EditImageFeature>
     let colums: [GridItem] = .init(repeating: .init(.flexible()), count: 3)
     
     @Environment(\.modelContext) private var context

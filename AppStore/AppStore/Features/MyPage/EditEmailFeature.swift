@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 @Reducer
-struct EditEmailReducer {
+struct EditEmailFeature {
     @ObservableState
     struct State {
         var email: String
@@ -70,7 +70,7 @@ struct EditEmailReducer {
 }
 
 struct EditEmailView: View {
-    @Bindable var store: StoreOf<EditEmailReducer>
+    @Bindable var store: StoreOf<EditEmailFeature>
     @Environment(\.modelContext) private var context
     @Query private var users: [User]
     private var user: User? {
@@ -141,8 +141,8 @@ struct EditEmailView: View {
 
 #Preview {
     EditEmailView(
-        store: Store(initialState: EditEmailReducer.State(email: "icopy@naver.com")) {
-            EditEmailReducer()
+        store: Store(initialState: EditEmailFeature.State(email: "icopy@naver.com")) {
+            EditEmailFeature()
         }
     )
 }

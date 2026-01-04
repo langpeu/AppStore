@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 @Reducer
-struct EditNameReducer {
+struct EditNameFeature {
     @ObservableState
     struct State {
         var name: String
@@ -72,7 +72,7 @@ struct EditNameReducer {
 }
 
 struct EditNameView: View {
-    @Bindable var store: StoreOf<EditNameReducer>
+    @Bindable var store: StoreOf<EditNameFeature>
     @Environment(\.modelContext) private var context
     @Query private var users: [User]
     private var user: User? {
@@ -142,8 +142,8 @@ struct EditNameView: View {
 
 #Preview {
     EditNameView(
-        store: Store(initialState: EditNameReducer.State(name: "홍길동")) {
-            EditNameReducer()
+        store: Store(initialState: EditNameFeature.State(name: "홍길동")) {
+            EditNameFeature()
         }
     )
 }

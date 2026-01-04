@@ -1,5 +1,5 @@
 //
-//  MyPageReducer.swift
+//  MyPageFeature.swift
 //  AppStore
 //
 //  Created by Langpeu on 12/23/25.
@@ -11,31 +11,31 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct MyPageStackReducer {
+struct MyPageStackFeature {
     @ObservableState
     enum State {
-        case name(EditNameReducer.State) // 이름 변경 페이지 리듀서 상태값
-        case email(EditEmailReducer.State) // 이메일 변경 페이지 리듀서 상태값
-        case image(EditImageReducer.State) // 프로필이미지 변경 페이지 리듀서 상태값
+        case name(EditNameFeature.State) // 이름 변경 페이지 리듀서 상태값
+        case email(EditEmailFeature.State) // 이메일 변경 페이지 리듀서 상태값
+        case image(EditImageFeature.State) // 프로필이미지 변경 페이지 리듀서 상태값
     }
     
     enum Action {
-        case name(EditNameReducer.Action) // 이름 변경 페이지 리듀서 액션
-        case email(EditEmailReducer.Action) // 이메일 변경 페이지 리듀서 액션
-        case image(EditImageReducer.Action) // 프로필이미지 변경 페이지 리듀서 액션
+        case name(EditNameFeature.Action) // 이름 변경 페이지 리듀서 액션
+        case email(EditEmailFeature.Action) // 이메일 변경 페이지 리듀서 액션
+        case image(EditImageFeature.Action) // 프로필이미지 변경 페이지 리듀서 액션
     }
     
     var body: some Reducer<State, Action> {
         Scope(state: \.name, action: \.name) {
-            EditNameReducer()
+            EditNameFeature()
         }
         
         Scope(state: \.email, action: \.email) {
-            EditEmailReducer()
+            EditEmailFeature()
         }
         
         Scope(state: \.image, action: \.image) {
-            EditImageReducer()
+            EditImageFeature()
         }
     }
     
@@ -43,11 +43,11 @@ struct MyPageStackReducer {
 
 
 @Reducer
-struct MyPageReducer: Reducer {
+struct MyPageFeature: Reducer {
     
     @ObservableState
     struct State {
-        var path: StackState<MyPageStackReducer.State> = .init()
+        var path: StackState<MyPageStackFeature.State> = .init()
         var userName: String = ""
         var userEmail: String = ""
         var userImage: Data? = nil
@@ -55,7 +55,7 @@ struct MyPageReducer: Reducer {
     
     enum Action {
         case onAppear(User)
-        case path(StackActionOf<MyPageStackReducer>)
+        case path(StackActionOf<MyPageStackFeature>)
         case tapOption(MyPageOption)
     }
     
@@ -98,7 +98,7 @@ struct MyPageReducer: Reducer {
             }
         }
         .forEach(\.path, action: \.path) {
-            MyPageStackReducer()
+            MyPageStackFeature()
         }
     }
 }

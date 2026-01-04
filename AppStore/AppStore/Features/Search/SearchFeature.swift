@@ -9,13 +9,13 @@ import ComposableArchitecture
 
 
 @Reducer
-struct SearchReducer {
+struct SearchFeature {
     @ObservableState
     struct State {
         var keyword: String = ""
         
-        @Presents var myPage: MyPageReducer.State?
-        var result: SearchResultReducer.State?
+        @Presents var myPage: MyPageFeature.State?
+        var result: SearchResultFeature.State?
     }
     
     enum Action {
@@ -24,8 +24,8 @@ struct SearchReducer {
         case onTapMyPage
         case onEmptyText
         case onTapKeyword(String)
-        case myPage(PresentationAction<MyPageReducer.Action>)
-        case result(SearchResultReducer.Action)
+        case myPage(PresentationAction<MyPageFeature.Action>)
+        case result(SearchResultFeature.Action)
         case onSubmit
     }
     
@@ -65,10 +65,10 @@ struct SearchReducer {
             return .none
         }
         .ifLet(\.$myPage, action: \.myPage) {
-            MyPageReducer()
+            MyPageFeature()
         }
         .ifLet(\.result, action: \.result) {
-            SearchResultReducer()
+            SearchResultFeature()
         }
     }
     

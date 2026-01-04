@@ -30,7 +30,7 @@ enum MyPageOption: CaseIterable {
 
 
 struct MyPageView: View {
-    @Bindable var store: StoreOf<MyPageReducer>
+    @Bindable var store: StoreOf<MyPageFeature>
     //@Bindable var store: Store<MyPageReducer.State, MyPageReducer.Action>
     //위에 코드를 짧게 만든 형태
     

@@ -27,7 +27,7 @@ final class NetworkManager {
         let result = await session.request(url, method: method, parameters: parameter, encoding: encoding)
             .validate().serializingData().response
         
-        if let error = result.error {
+        if result.error != nil {
             return .failure(NetworkError.requestFail)
         }
         

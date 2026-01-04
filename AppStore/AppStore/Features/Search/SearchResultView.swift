@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct SearchResultView: View {
     
-    @Bindable var store: StoreOf<SearchResultReducer>
+    @Bindable var store: StoreOf<SearchResultFeature>
     
     
     var body: some View {

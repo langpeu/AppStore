@@ -10,7 +10,7 @@ import ComposableArchitecture
 import SwiftData
 
 struct SearchView: View {
-    @Bindable var store: StoreOf<SearchReducer>
+    @Bindable var store: StoreOf<SearchFeature>
     @Environment(\.modelContext) private var context
     @Query(sort: \Keyword.date, order: .reverse) private var keywords: [Keyword]
     

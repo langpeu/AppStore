@@ -17,8 +17,6 @@ struct PhotoManager {
         return authResult
     }
     
-    
-    
     static func getAssets() -> [PHAsset] {
        let options = PHFetchOptions()
         options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]

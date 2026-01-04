@@ -10,8 +10,8 @@ import SwiftUI
 import Dependencies
 
 @Reducer
-struct SearchResultReducer {
-    @Dependency(\.appRepository) var repository: AppRepository
+struct SearchResultFeature {
+    @Dependency(\.appStoreClient) var client
     @ObservableState
     struct State {
         let keyword: String
@@ -48,7 +48,7 @@ struct SearchResultReducer {
     func fetchList(keyword: String) -> Effect<Action> {
         //TODO: fetch List
         Effect.run { send in
-            let result = await repository.fetchAppList(term: keyword, limit: 20)
+            let result = await client.fetchAppList(keyword, 20)
             switch result {
             case .success(let list):
                 await send(.searchResponse(.success(list)))
